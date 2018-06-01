@@ -1,14 +1,60 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Stripe
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <form [formGroup]="miForm" (ngSubmit)="generarToken()" novalidate>
+    <ion-list>
+          <ion-item>
+            <ion-label stacked >Número de tarjeta</ion-label>
+            <ion-input formControlName="numero" type="number" placeholder="XXXXXXXXXXXXXXXX"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="miForm.get('numero').errors && miForm.get('numero').dirty">
+            <p *ngIf="miForm.get('numero').hasError('required')">Campo requerido</p>
+            <p *ngIf="miForm.get('numero').hasError('minlength')">Min of 16 caracteres</p>
+            <p *ngIf="miForm.get('numero').hasError('maxlength')">Max of 16 caracteres</p>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked >Mes</ion-label>
+            <ion-input formControlName="month" type="number" placeholder="MM"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="miForm.get('month').errors && miForm.get('month').dirty">
+            <p *ngIf="miForm.get('month').hasError('required')">Campo requerido</p>
+            <p *ngIf="miForm.get('month').hasError('minlength')">Min of 1 caracteres</p>
+            <p *ngIf="miForm.get('month').hasError('maxlength')">Max of 2 caracteres</p>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked >Año</ion-label>
+            <ion-input formControlName="year" type="number" placeholder="AAAA"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="miForm.get('year').errors && miForm.get('year').dirty">
+            <p *ngIf="miForm.get('year').hasError('required')">Campo requerido</p>
+            <p *ngIf="miForm.get('year').hasError('minlength')">Min of 4 caracteres</p>
+            <p *ngIf="miForm.get('year').hasError('maxlength')">Max of 4 caracteres</p>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked >cvc</ion-label>
+            <ion-input formControlName="cvc" type="number" placeholder="XXX"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="miForm.get('cvc').errors && miForm.get('cvc').dirty">
+            <p *ngIf="miForm.get('cvc').hasError('required')">Campo requerido</p>
+            <p *ngIf="miForm.get('cvc').hasError('minlength')">Min of 4 caracteres</p>
+            <p *ngIf="miForm.get('cvc').hasError('maxlength')">Max of 4 caracteres</p>
+          </ion-item>
+
+          <ion-item-divider >
+            <p>Token: {{token}}</p>
+          </ion-item-divider>
+     </ion-list>
+     <div padding>
+       <button ion-button block type="submit" [disabled]="miForm.invalid">Generar token</button>       
+     </div>
+  </form>
 </ion-content>
